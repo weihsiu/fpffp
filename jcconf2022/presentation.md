@@ -7,7 +7,7 @@ marp: true
 ### @weihsiu / weihsiu@gmail.com
 
 ![bg right:30% w:350](qrcode.png)
-https://github.com/weihsiu/secs
+https://github.com/weihsiu/fpffp
 
 ---
 ![bg right:33% w:500](scalataiwan.png)
@@ -80,6 +80,6 @@ _ Examples
 # Q&A
 ## That's all and thank you for your attention
 ![bg right:30% w:350](qrcode.png)
-https://github.com/weihsiu/secs
+https://github.com/weihsiu/fpffp
 
 
