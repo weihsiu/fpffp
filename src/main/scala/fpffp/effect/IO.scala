@@ -17,6 +17,5 @@ object IO:
       defer(Try(fa.unsafePerformIO()).fold(f, _pure))
     def _map[A, B](fa: IO[A])(f: A => B): IO[B] = delay(f(fa.unsafePerformIO()))
     def ap[A, B](ff: IO[A => B])(fa: IO[A]): IO[B] = ff.flatMap(f => fa.map(f))
-    def _flatMap[A, B](fa: IO[A])(f: A => IO[B]): IO[B] = f(
-      fa.unsafePerformIO()
-    )
+    def _flatMap[A, B](fa: IO[A])(f: A => IO[B]): IO[B] =
+      IO.defer(f(fa.unsafePerformIO()))

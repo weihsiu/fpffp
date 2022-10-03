@@ -20,6 +20,7 @@ https://github.com/weihsiu/fpffp
 # Agenda
 - Why functional programming?
 - Constraits
+- Refresher
 - Functor
 - Applicative
 - Traverse
@@ -29,7 +30,7 @@ https://github.com/weihsiu/fpffp
 
 ---
 # Why functional programming?
-- Multi-core/multi-thread
+- Multi-core CPU / multi-thread programming
 - Immutable (less bugs)
 - Composable
 
@@ -41,9 +42,19 @@ https://github.com/weihsiu/fpffp
 - No functions returning `Unit`
 
 ---
+# Refresher
+- `List` is a type constructor
+- `List[Int]` is a type
+- `trait List[A]` is a generic trait which takes a type(`A`) as its type parameter
+- `trait Functor[F[_]]` is a generic trait which takes a type constructor(`F[_]`) as its type parameter
+
+---
 # Functor
+```scala
+trait Functor[F[_]]:
+  def map[A, B](fa: F[A])(f: A => B): F[B]
+```
 - Transform(map) something in a context to something else in the same context
-- Happy path programming
 - Composable
 - Examples
   * Map over `List[A]`
@@ -52,6 +63,11 @@ https://github.com/weihsiu/fpffp
 
 ---
 # Applicative
+```scala
+trait Applicative[F[_]] extends Functor[F]:
+  def pure[A](x: A): F[A]
+  def ap[A, B](ff: F[A => B])(fa: F[A]): F[B]
+```
 - Lift(transform) functions to a new context
 - Composable
 - Examples
@@ -63,17 +79,24 @@ https://github.com/weihsiu/fpffp
 - Swap nested contexts
 - Examples
   * Turn a `List[Option[A]]` to `Option[List[A]]`
+    - `List(Some(1), Some(2), Some(3))` => `Some(List(1, 2, 3))`
+    - `List(Some(1), None, Some(3))` => `None`
 
 ---
 # Monad
+```scala
+trait Monad[F[_]] extends Applicative[F]:
+  def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
+```
 - Sequential computation
+- Happy path programming
 - Examples
   * Sequence of calls to functions that may fail
 
 ---
 # IO
 - Computation effects
-_ Examples
+- Examples
   * User interactions
 
 ---

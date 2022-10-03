@@ -8,8 +8,10 @@ import scala.concurrent.duration.*
 def optionApplicative() =
   import Applicative.given Applicative[Option]
   def repeatString(str: String, times: Int): String = str.repeat(times)
-  // like calling (Option[String], Option[Int]) => Option[String]
-  println(repeatString.curried <@> Option("hello ") <*> Option(5))
+  val strO: Option[String] = Some("hello ")
+  val intO: Option[Int] = Some(5)
+  // like calling def repeatString(Option[String], Option[Int]):  Option[String]
+  println(repeatString.curried <@> strO <*> intO)
   println(repeatString.curried <@> Option("world ") <*> None)
 
 def futureApplicative() =
@@ -19,7 +21,8 @@ def futureApplicative() =
     Future.successful("Walter") // or get it via some network call
   val addressF: Future[String] =
     Future.successful("Taiwan") // or get it via some network call
-  println(Await.result(User.apply.curried <@> nameF <*> addressF, 1.second))
+  val userF: Future[User] = User.apply.curried <@> nameF <*> addressF
+  println(Await.result(userF, 1.second))
 
 def futureOptionApplicative() =
   import Applicative.given Applicative[Option]
