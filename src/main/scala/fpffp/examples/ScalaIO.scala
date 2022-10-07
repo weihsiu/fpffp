@@ -17,6 +17,9 @@ def ScalaIO() =
       name <- getLine()
       _ <- putLine(s"hey, $name, you have such beautiful name!")
     yield name
+  println("press <enter> to perform IO")
+  StdIn.readLine()
   println(name.unsafePerformIO())
 
   val ios = List(putLine("hello"), putLine("world"), putLine("how are you"))
+  println(ios)
